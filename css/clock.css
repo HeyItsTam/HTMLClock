@@ -1,0 +1,17 @@
+body {
+   background-color: maroon;
+   color: white;
+   text-align: center;
+   font-family: arial;
+   
+}
+
+h1 {
+   padding-top: 80px;
+   font-weight: normal;
+}
+
+.clockType {
+   line-height: 0px;
+   font-size: 120px;
+}
