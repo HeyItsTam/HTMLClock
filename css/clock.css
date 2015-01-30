@@ -1,9 +1,7 @@
 body {
-   background-color: #529ECC;
    color: white;
    text-align: center;
    font-family: arial;
-   
 }
 
 h1 {
@@ -14,4 +12,24 @@ h1 {
 .clockType {
    line-height: 0px;
    font-size: 120px;
+}
+
+.cold {
+   background-color: #95A5A6;
+}
+
+.chilly {
+   background-color: #1ABC9C;
+}
+
+.nice {
+   background-color: #2980B9;
+}
+
+.warm {
+   background-color: #E67E22;
+}
+
+.hot {
+   background-color: #E74C3C;
 }
