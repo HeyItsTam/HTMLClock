@@ -31,3 +31,35 @@ function getTemp() {
       $("body").addClass(className);
    });
 }
+
+function showAlarmPopup() {
+   $("#mask").removeClass("hide");
+   $("#popup").removeClass("hide");
+}
+
+function hideAlarmPopup() {
+   $("#mask").addClass("hide");
+   $("#popup").addClass("hide");
+}
+
+function insertAlarm(hours, mins, ampm, alarmName) {
+   if (alarmName != "") {
+      alarmName += "&nbsp-&nbsp";
+   }
+   var divName = "<div class='name'>" + alarmName + "</div>";
+   var divTime = "<div class='time'>" + hours + ":" + mins + " " + ampm + "</div>";
+   var newDiv = $("<div>").addClass("flexable");
+   
+   newDiv.append(divName, divTime);
+   $("#alarms").append(newDiv);
+}
+
+function addAlarm() {
+   var hours = $("#hours option:selected").text();
+   var min = $("#mins option:selected").text();
+   var ampm = $("#ampm option:selected").text();
+   var alarmName = $("#alarmName").val();
+   
+   insertAlarm(hours, min, ampm, alarmName);
+   hideAlarmPopup();
+}
