@@ -60,9 +60,9 @@ function loginHandler() {
      console.log('Successful login for: ' + response.name);
      window.userId = response.id;
      $('#status').html('Hello, ' + response.name + '!');
-     $('#alarmHeader').removeClass("hide");
-     $('#alarms').removeClass("hide");
+     createAlarmContents();
      $('#alarmHeader').addClass("flexable");
+     getAllAlarms();
    });
    FB.Event.subscribe('auth.logout', statusChangeCallback);
 }
@@ -70,7 +70,7 @@ function loginHandler() {
 function logoutHandler() {
    window.userId = "";
    $('#status').html("Welcome!");
-   $('#alarmHeader').addClass("hide");
-   $('#alarms').addClass("hide");
+   $('#alarmHeader').remove();
+   $('#alarms').remove();
    $('#alarmHeader').removeClass("flexable");
 }

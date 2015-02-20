@@ -71,7 +71,7 @@ function insertAlarm(time, alarmName, id) {
    var divTime = '<div class="time">' + time + '</div>';
    var newDiv = $('<div id="alarm' + id +'">').addClass("flexable");
    
-   newDiv.append(delButton, divName, divTime + '<br><br>');
+   newDiv.append(delButton, divName, divTime + "<br><br>");
    $("#alarms").append(newDiv);
 }
 
@@ -101,4 +101,13 @@ function getAllAlarms() {
          }
       }
    });
+}
+
+function createAlarmContents() {
+   var alarmHeader = $('<div id="alarmHeader">');
+   alarmHeader.append('<h2>Alarms</h2>');
+   alarmHeader.append('<input type="button" value="Add Alarm" class="button" onclick="showAlarmPopup()"/>');
+   var alarms = $('<div id="alarms">');
+   
+   $('#alarmContainer').prepend(alarmHeader, alarms);
 }
