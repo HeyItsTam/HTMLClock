@@ -9,6 +9,10 @@ h1 {
    font-weight: normal;
 }
 
+#forecastLabel>h2 {
+   font-weight: normal;
+}
+
 .clockType {
    line-height: 0px;
    font-size: 120px;
