@@ -1,4 +1,4 @@
-window.onload = getTime(), getTemp(), getAllAlarms();
+window.onload = getTime(), getLocation(), getAllAlarms();
 
 function getTime() {
    var date = new Date();
@@ -9,9 +9,32 @@ function getTime() {
    setTimeout(getTime, 1000);
 }
 
-function getTemp() {
-   $.getJSON("https://api.forecast.io/forecast/b6392d0fd315033d4d14799a2fa54882/35.300399,-120.662362?callback=?", function(data) {
-      $("#forecastLabel").html(data.daily.summary);
+function getLocation() {
+   if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+         $("#forecastLabel").append("Forecast in your area...");
+         getTemp(position.coords.latitude, position.coords.longitude);
+      });
+   } else {
+      $("#forecastLabel").append("Forecast in San Luis Obispo, CA...");
+      getTemp(null, null);
+   }
+}
+
+function getTemp(latitude, longitude) {
+   if (latitude == null && longitude == null) {
+      // default coordinates in San Luis Obispo, CA
+      latitude = "35.300399";
+      longitude = "-120.662362";
+   }
+   var forecastLink = "https://api.forecast.io/forecast/";
+   var apiKey = "b6392d0fd315033d4d14799a2fa54882";
+   var position = latitude + "," + longitude;
+   var callbackParam = "?callback=?";
+   var url = forecastLink + apiKey + "/" + position + callbackParam;
+   
+   $.getJSON(url, function(data) {
+      $("#forecastLabel").append('<h2>'+data.daily.summary+'</h2>');
       $("#forecastIcon").attr("src", "img/" + data.daily.icon + ".png");
       
       var className;
@@ -103,7 +126,7 @@ function getAllAlarms() {
    });
 }
 
-function createAlarmContents() {
+function createAlarmContentBody() {
    var alarmHeader = $('<div id="alarmHeader">');
    alarmHeader.append('<h2>Alarms</h2>');
    alarmHeader.append('<input type="button" value="Add Alarm" class="button" onclick="showAlarmPopup()"/>');

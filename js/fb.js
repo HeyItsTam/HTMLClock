@@ -60,7 +60,7 @@ function loginHandler() {
      console.log('Successful login for: ' + response.name);
      window.userId = response.id;
      $('#status').html('Hello, ' + response.name + '!');
-     createAlarmContents();
+     createAlarmContentBody();
      $('#alarmHeader').addClass("flexable");
      getAllAlarms();
    });
