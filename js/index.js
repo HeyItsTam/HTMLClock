@@ -42,18 +42,36 @@ function hideAlarmPopup() {
    $("#popup").addClass("hide");
 }
 
+function addAlarm() {
+   var hours = $("#hours option:selected").text();
+   var mins = $("#mins option:selected").text();
+   var ampm = $("#ampm option:selected").text();
+   var time = hours + ":" + mins + " " + ampm;
+   var alarmName = $("#alarmName").val();
+   
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var alarmObject = new AlarmObject();
+   
+   alarmObject.save({"time": time, "alarmName": alarmName, "userId": userId}, {
+      success: function(object) {
+         insertAlarm(time, alarmName, alarmObject.id);
+         hideAlarmPopup();
+      }
+   });
+}
+
 function insertAlarm(time, alarmName, id) {
    if (alarmName != "") {
       alarmName += "&nbsp-&nbsp";
    }
    alarmName = "&nbsp&nbsp" + alarmName;
    
+   var delButton = '<div><input type="button" value="x" onclick="deleteAlarm(\'' + id + '\')"/></div>';
    var divName = '<div class="name">' + alarmName + '</div>';
    var divTime = '<div class="time">' + time + '</div>';
-   var delButton = '<input type="button" value="x" onclick="deleteAlarm(\'' + id + '\')"/>';
    var newDiv = $('<div id="alarm' + id +'">').addClass("flexable");
    
-   newDiv.append(delButton, divName, divTime);
+   newDiv.append(delButton, divName, divTime + '<br><br>');
    $("#alarms").append(newDiv);
 }
 
@@ -69,29 +87,13 @@ function deleteAlarm(id) {
    });
 }
 
-function addAlarm() {
-   var hours = $("#hours option:selected").text();
-   var mins = $("#mins option:selected").text();
-   var ampm = $("#ampm option:selected").text();
-   var time = hours + ":" + mins + " " + ampm;
-   var alarmName = $("#alarmName").val();
-   
-   var AlarmObject = Parse.Object.extend("Alarm");
-   var alarmObject = new AlarmObject();
-   
-   alarmObject.save({"time": time, "alarmName": alarmName}, {
-      success: function(object) {
-         insertAlarm(time, alarmName, alarmObject.id);
-         hideAlarmPopup();
-      }
-   });
-}
-
 function getAllAlarms() {
    Parse.initialize("bdQVlFUkoIZrey6IvX7QsHq0pFpA78LPbGmaT6Dq", "oPZYXLcukxBuTrhBUx2Ej3vzzv14JPsjbmpZW31c");
    var AlarmObject = Parse.Object.extend("Alarm");
    var query = new Parse.Query(AlarmObject); 
 
+   query = query.contains('userId', userId).ascending('updatedAt');
+   
    query.find({
       success: function(results) {
          for (var i = 0; i < results.length; i++) { 
@@ -99,5 +101,4 @@ function getAllAlarms() {
          }
       }
    });
-
 }

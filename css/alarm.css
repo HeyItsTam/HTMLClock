@@ -26,6 +26,7 @@ h2 {
 	background:#ecf0f1;
 	color:#777;
 	padding:20px;
+   border-radius:10px;
 }
 #alarmHeader {
 	position:relative;
