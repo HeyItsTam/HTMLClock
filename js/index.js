@@ -79,6 +79,8 @@ function addAlarm() {
       success: function(object) {
          insertAlarm(time, alarmName, alarmObject.id);
          hideAlarmPopup();
+         
+         ga('send', 'event', 'Alarm', 'Add');
       }
    });
 }
@@ -106,6 +108,8 @@ function deleteAlarm(id) {
       success: function(result) {
          result.destroy({});
          $("#alarm" + id).remove();
+         
+         ga('send', 'event', 'Alarm', 'Delete');
       }
    });
 }
